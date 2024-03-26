@@ -1,8 +1,10 @@
 from tkinter import  *
 from tkinter import ttk
+
 window = Tk()
 
 window.title("Data Entry Form")
+
 
 frame = Frame(window)
 
