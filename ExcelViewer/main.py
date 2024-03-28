@@ -22,7 +22,6 @@ def load_data():
         tree.insert("", tkinter.END, values=value_tuple)
 
     tree.pack(expand=True, fill="y")
-    print(data[2])
     return data
 
 window = Tk()
