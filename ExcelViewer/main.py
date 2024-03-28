@@ -4,31 +4,34 @@ import xlrd
 from tkinter import *
 from tkinter import ttk
 def load_data():
-    file_path = "C:\\Users\\DELL\\Documents\\countries.xls"
-    workbook = xlrd.open_workbook(file_path)
-    sheet = workbook.sheet_by_index(0) # Assuming the data is on the first page
+    # workbook
 
-    data = []
+    path = "C:\\Users\\DELL\\Documents\\countries.xls"
+    workbook = xlrd.open_workbook(path)
+    sheet = workbook.sheet_by_index(0) # Getting the info from the first page
+    print(sheet)
+    # Append the data received from the sheet into a list
+    # Get the data using the index
+
+    list_container = []
 
     for row_index in range(sheet.nrows):
-        row_data = sheet.row_values(row_index)
-        data.append(row_data)
+        row_values = sheet.row_values(row_index)
+        list_container.append(row_values)
 
-    tree = ttk.Treeview(master=window, show="headings", columns=data[0] )
-    for col_names in data[0]:
-        tree.heading(col_names, text=col_names)
 
-    for value_tuple in data[1:]:
-        tree.insert("", tkinter.END, values=value_tuple)
+    tree_view = ttk.Treeview(master=window, show="headings", columns=list_container[0])
+     # loop through the list container to get the header names
+    for column_names in list_container[0]:
+        tree_view.heading(column_names, text=column_names)
 
-    tree.pack()
-    print(data[2])
-    return data
+    # Loop through the list container starting from the first index or index one
+    for content in list_container[1:]:
+        tree_view.insert("", tkinter.END, values=content)
+
+    tree_view.pack(expand=True, fill="y")
 
 window = Tk()
 window.title("Excel Viewer")
-
-
 load_data()
-
 window.mainloop()
