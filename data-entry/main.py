@@ -2,6 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+import openpyxl
+import os
+
 
 def enter_data():
     accepted = accept_var.get()
@@ -26,6 +29,30 @@ def enter_data():
             print("# courses: ", total_courses, "# Semesters: ", total_semesters)
             print("Registration status: ", registration_status)
             print("---------------------------------------------")
+
+            file_path = "E:\\2024 Tutorials\\python\\python-project-newbie\\data-entry\\data.xlsx"
+
+            if not os.path.exists(file_path):
+                workbook = openpyxl.Workbook()
+                sheet = workbook.active
+                heading = [
+                    "First Name", "Last Name",
+                    "Title", "Age",
+                    "Nationality", "# Courses",
+                    "# Semesters", "Registration Status"
+                ]
+                sheet.append(heading)
+                workbook.save(file_path)
+
+            workbook = openpyxl.load_workbook(file_path)
+            sheet = workbook.active
+            sheet.append([
+                firstname, lastname, title, age, nationality, total_courses,total_semesters, registration_status
+            ])
+            workbook.save(file_path)
+
+
+
         else:
             messagebox.showwarning(title="Error", message="First Name and Last Name are required")
     else:
@@ -107,9 +134,8 @@ term_frame = LabelFrame(frame, text="Terms and condition")
 
 # Entry
 accept_var = StringVar(value="Not Accepted")
-terms_check = Checkbutton(term_frame, text="I accept the terms and conditions.", variable=accept_var, onvalue="Accepted"
-                          , offvalue="Not Accepted"
-                          )
+terms_check = Checkbutton(term_frame, text="I accept the terms and conditions.", variable=accept_var,
+                          offvalue="Not Accepted", onvalue="Accepted")
 
 # grid containing
 term_frame.grid(row=2, column=0, sticky="news", padx=20, pady=10)
