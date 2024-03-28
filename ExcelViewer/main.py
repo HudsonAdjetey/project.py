@@ -21,7 +21,7 @@ def load_data():
     for value_tuple in data[1:]:
         tree.insert("", tkinter.END, values=value_tuple)
 
-    tree.pack()
+    tree.pack(expand=True, fill="y")
     print(data[2])
     return data
 
